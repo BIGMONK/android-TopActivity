@@ -27,6 +27,14 @@ public class TasksWindow {
                         WindowManager.LayoutParams.TYPE_PHONE,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {//8.0新特性
+            sWindowParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        } else {
+            sWindowParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+        }
+
         sWindowParams.gravity = Gravity.LEFT + Gravity.TOP;
         sView = LayoutInflater.from(context).inflate(R.layout.window_tasks,
                 null);
@@ -76,6 +84,7 @@ public class TasksWindow {
         try {
             sWindowManager.addView(sView, sWindowParams);
         } catch (Exception e) {
+            e.printStackTrace();
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             QuickSettingTileService.updateTile(context);
